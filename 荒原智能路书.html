@@ -1,0 +1,1947 @@
+<html lang="zh-CN"><head>
+<script>
+try{if(window.parent&&window.parent!==window){window.parent.promotekit_referral="1fd2949a-d22c-431b-92bf-02d4ad04ee24";window.parent.document.cookie="promotekit_referral=1fd2949a-d22c-431b-92bf-02d4ad04ee24;path=/;domain=.aura.build;max-age=31536000"}}catch(e){}
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荒野智能路书 — 一站式户外出行解决方案</title>
+<link rel="icon" href="favicon.ico">
+<link rel="icon" href="favicon-16x16.png" sizes="16x16">
+<link rel="icon" href="favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<style>
+@keyframes dash {
+0% { stroke-dasharray: 0, 20; stroke-dashoffset: 0; }
+50% { stroke-dasharray: 10, 10; stroke-dashoffset: -5; }
+100% { stroke-dasharray: 20, 0; stroke-dashoffset: -10; }
+}
+@keyframes floating-points {
+0% { transform: translateY(0); }
+85% { opacity: 0; }
+100% { transform: translateY(-55px); opacity: 0; }
+}
+/* Hide elements before GSAP kicks in to prevent FOUC */
+.reveal-target {
+opacity: 0;
+visibility: hidden;
+}
+
+   body {
+            background: #111;
+            margin: 0;
+        }
+<!55>
+#spinner {
+  transform-style: preserve-3d;
+  height: 400px;
+  width: 800px;
+}
+#spinner img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  backface-visibility: hidden;
+}
+        #container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden
+        }
+        #ui {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.35);
+            padding: 8px;
+            border-radius: 8px
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20
+        }
+        a {
+            color: #9cf;
+            text-decoration: none;
+        }
+        a:hover {
+            color: white;
+        }
+        .hint {
+            opacity: 0.85;
+            font-size: 13px
+        }
+        .copy {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #000;
+            background: rgb(255 255 255 / 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+body {
+    background: transparent; /* 原#100000改为完全透明 */
+    font-family: sans-serif;
+}
+
+div#carousel {
+    perspective: 1200px;
+    background: transparent; /* 原#100000改为完全透明 */
+    padding-top: 10%;
+    font-size: 0;
+    margin-bottom: 3rem;
+    overflow: hidden;
+}
+        figure#spinner {
+            transform-style: preserve-3d;
+            height: 300px;
+            transform-origin: 50% 50% -500px;
+            transition: transform 1s ease;
+        }
+
+        figure#spinner img {
+            width: 40%;
+            max-width: 425px;
+            position: absolute;
+            left: 30%;
+            transform-origin: 50% 50% -500px;
+            outline: 1px solid transparent;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        figure#spinner img:nth-child(1) { transform: rotateY(0deg); }
+        figure#spinner img:nth-child(2) { transform: rotateY(-45deg); }
+        figure#spinner img:nth-child(3) { transform: rotateY(-90deg); }
+        figure#spinner img:nth-child(4) { transform: rotateY(-135deg); }
+        figure#spinner img:nth-child(5) { transform: rotateY(-180deg); }
+        figure#spinner img:nth-child(6) { transform: rotateY(-225deg); }
+        figure#spinner img:nth-child(7) { transform: rotateY(-270deg); }
+        figure#spinner img:nth-child(8) { transform: rotateY(-315deg); }
+                div#carousel ~ span {
+            color: #000; /* 修改为黑色 */
+            margin: 5%;
+            display: inline-block;
+            text-decoration: none;
+            font-size: 2rem;
+            transition: color 0.6s ease;
+            position: relative;
+            margin-top: -6rem;
+            border-bottom: none;
+            line-height: 0;
+            user-select: none;
+        }
+        div#carousel ~ span:hover {
+            color: #555; /* 调整hover颜色为深灰色 */
+            cursor: pointer;
+        }
+</style><!-- aura-ga4-start -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2M6V79H761"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2M6V79H761');
+
+
+</script>
+<!-- aura-ga4-end -->
+</head>
+<body class="bg-[#0A0A0A] antialiased selection:bg-white/20 selection:text-white overflow-x-hidden font-sans" style="font-family: 'Inter', sans-serif;">
+
+    <!-- SECTION 1: HERO (DARK) -->
+    <main class="w-full relative flex flex-col overflow-hidden py-24 lg:py-32">
+
+        <!-- FULLSCREEN WEBGL BACKGROUND (AURORA) -->
+        <div id="aurora-container" class="absolute inset-0 z-0 w-full h-full pointer-events-none opacity-40 mix-blend-screen"></div>
+
+        <!-- Floating Pill Navigation -->
+        <nav class="absolute top-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-5xl z-50 flex justify-between items-center px-6 py-3 rounded-full border border-white/10 bg-[#0A0A0A]/60 backdrop-blur-md shadow-2xl reveal-target">
+            <div class="flex items-center gap-2 text-white">
+                <span class="font-normal tracking-tighter text-lg">荒野路书</span>
+            </div>
+            <div class="hidden md:flex items-center gap-10 text-xs uppercase tracking-widest">
+                <a id="nav-features" href="#architecture" class="text-white hover:text-white transition-colors cursor-pointer">核心功能</a>
+                <a id="nav-community" href="#architecture" class="text-white/50 hover:text-white transition-colors cursor-pointer">社区</a>
+                <a id="nav-routes" href="#architecture" class="text-white/50 hover:text-white transition-colors cursor-pointer">路线库</a>
+            </div>
+            <a href="#login" class="flex items-center gap-2 text-white text-xs border border-white/10 bg-white/5 backdrop-blur-md rounded-full px-5 py-2 hover:bg-white/10 transition-all">
+                <iconify-icon icon="solar:user-rounded-linear" width="16" stroke-width="1.5"></iconify-icon>
+                <span class="font-normal">登录账号</span>
+            </a>
+        </nav>
+
+        <div class="flex-1 flex flex-col lg:flex-row w-full relative pt-12 lg:pt-0 z-10">
+            <!-- Left Column: Content -->
+            <div class="w-full lg:w-1/2 p-8 lg:p-24 flex flex-col justify-center relative z-20">
+                <div class="mb-5 opacity-80 inline-flex items-center gap-2 text-white reveal-target">
+                    <span class="italic text-sm md:text-base text-white/70">
+                        { AI驱动的户外智能服务 }
+                    </span>
+                </div>
+
+                <h1 class="text-white text-4xl md:text-6xl xl:text-7xl tracking-tight leading-[1.05] mb-8 reveal-target">
+                    AI智能路书，<br>
+                    <span class="italic text-white/60">重新定义户外出行。</span>
+                </h1>
+
+                <p class="text-white/50 text-base md:text-lg leading-relaxed max-w-lg font-light mb-12 reveal-target">
+                    荒野智能路书以人工智能算法为核心，覆盖全品类户外运动场景，为你提供一站式户外出行解决方案，让每一次探索都安全、高效、随心。
+                </p>
+
+                <div class="flex flex-wrap gap-6 mb-16 reveal-target">
+                    <div style="background: linear-gradient(145deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.05) 100%); padding: 1px;" class="rounded-full shadow-lg">
+                        <button class="bg-white text-black px-8 py-4 rounded-full text-sm font-normal hover:bg-zinc-200 transition-all flex items-center gap-2">
+                            立即开始
+                            <iconify-icon icon="solar:arrow-right-linear" width="18" stroke-width="1.5"></iconify-icon>
+
+                    </button></div>
+                    <button class="text-white/70 border border-white/10 px-8 py-4 rounded-full text-sm font-normal hover:bg-white/5 transition-all">
+                        查看文档
+
+                </button></div>
+
+                <!-- Stats Grid -->
+                <div class="pt-8 border-t border-white/10 grid grid-cols-2 gap-6 max-w-sm reveal-target">
+                    <div>
+                        <div class="text-white text-2xl font-medium tracking-tight mb-1">10万+</div>
+                        <div class="text-white/40 text-xs font-mono tracking-wider uppercase">规划路线</div>
+                    </div>
+                    <div>
+                        <div class="text-white text-2xl font-medium tracking-tight mb-1">99.8%</div>
+                        <div class="text-white/40 text-xs font-mono tracking-wider uppercase">安全保障率</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Visuals -->
+            <div class="w-full lg:w-1/2 h-[60vh] lg:h-auto relative z-10 overflow-hidden flex items-center justify-center reveal-target">
+
+                <!-- Connecting Lines Background -->
+                <div class="absolute inset-0 pointer-events-none opacity-[0.15] mix-blend-screen flex items-center justify-center">
+                    <svg width="100%" height="100%" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute" preserveAspectRatio="xMidYMid slice">
+                        <circle cx="400" cy="400" r="300" stroke="white" stroke-width="0.5" stroke-dasharray="4 4"></circle>
+                        <circle cx="400" cy="400" r="150" stroke="white" stroke-width="0.5"></circle>
+                        <path d="M 100 400 L 700 400" stroke="white" stroke-width="0.5"></path>
+                        <path d="M 400 100 L 400 700" stroke="white" stroke-width="0.5"></path>
+                        <rect x="398" y="398" width="4" height="4" fill="white"></rect>
+                    </svg>
+                </div>
+
+                <!-- Isometric Staggered Cards -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div id="cards-wrapper" class="relative w-48 md:w-56 aspect-[4/5] xl:scale-110" style="transform-style: preserve-3d;">
+
+                        <!-- Card 3 (Back) -->
+                        <div class="absolute inset-0 pointer-events-auto group z-10" style="transform: translate3d(65%, -40%, -80px);">
+                            <div class="w-full h-full transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:translate-x-2">
+                                <div style="background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.01) 100%); padding: 1px;" class="w-full h-full rounded-xl shadow-2xl shadow-black/80">
+                                    <div class="bg-[#101010]/90 backdrop-blur-md w-full h-full rounded-[calc(0.75rem-1px)] flex flex-col p-2.5 overflow-hidden relative">
+                                        <div class="flex justify-between items-center text-xs text-white/40 font-mono tracking-widest uppercase mb-2 px-1">
+                                            <span># 山野徒步</span>
+                                            <span>[已同步]</span>
+                                        </div>
+                                        <div class="flex-grow rounded-lg bg-zinc-900 relative overflow-hidden">
+                                            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="徒步" class="w-full h-full object-cover opacity-40 mix-blend-luminosity">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 (Middle) -->
+                        <div class="absolute inset-0 pointer-events-auto group z-20" style="transform: translate3d(0%, 0%, 0px);">
+                            <div class="w-full h-full transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:translate-x-2">
+                                <div style="background: linear-gradient(145deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.02) 100%); padding: 1px;" class="w-full h-full rounded-xl shadow-2xl shadow-black/90">
+                                    <div class="bg-[#121212] w-full h-full rounded-[calc(0.75rem-1px)] flex flex-col p-2.5 overflow-hidden">
+                                        <div class="flex justify-between items-center text-xs text-white/70 font-mono tracking-widest uppercase mb-2 px-1">
+                                            <span># 骑行穿越</span>
+                                            <span>[规划中]</span>
+                                        </div>
+                                        <div class="flex-grow rounded-lg bg-zinc-800 relative overflow-hidden">
+                                            <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="骑行" class="w-full h-full object-cover opacity-80 saturate-100 hue-rotate-30">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 1 (Front) -->
+                        <div class="absolute inset-0 pointer-events-auto group z-30" style="transform: translate3d(-65%, 40%, 80px);">
+                            <div class="w-full h-full transition-transform duration-700 ease-out group-hover:-translate-y-2 group-hover:translate-x-2">
+                                <div style="background: linear-gradient(145deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.05) 100%); padding: 1px;" class="w-full h-full rounded-xl shadow-2xl shadow-black drop-shadow-2xl">
+                                    <div class="bg-[#141414] w-full h-full rounded-[calc(0.75rem-1px)] flex flex-col p-2.5 overflow-hidden">
+                                        <div class="flex justify-between items-center text-xs text-white font-mono tracking-widest uppercase mb-2 px-1">
+                                            <span># 核心服务</span>
+                                            <span class="text-emerald-400">[运行中]</span>
+                                        </div>
+                                        <div class="flex-grow rounded-lg bg-zinc-800 relative overflow-hidden flex items-center justify-center">
+                                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="核心" class="absolute inset-0 w-full h-full object-cover opacity-90 saturate-50">
+                                            <svg viewBox="0 0 100 100" class="absolute inset-0 w-full h-full p-4 drop-shadow-md z-10">
+                                                <polygon points="50,15 85,50 50,85 15,50" fill="none" stroke="white" stroke-width="1" stroke-dasharray="2 2"></polygon>
+                                                <circle cx="50" cy="50" r="18" fill="none" stroke="white" stroke-width="1.5"></circle>
+                                                <circle cx="50" cy="50" r="4" fill="white"></circle>
+                                                <circle cx="50" cy="15" r="3" fill="#141414" stroke="white" stroke-width="1.5"></circle>
+                                                <circle cx="85" cy="50" r="3" fill="#141414" stroke="white" stroke-width="1.5"></circle>
+                                                <circle cx="50" cy="85" r="3" fill="#141414" stroke="white" stroke-width="1.5"></circle>
+                                                <circle cx="15" cy="50" r="3" fill="#141414" stroke="white" stroke-width="1.5"></circle>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SECTION 2: ARCHITECTURE (LIGHT) -->
+    <section id="architecture" class="w-full bg-white py-24 md:py-32 px-6 lg:px-24 relative z-20">
+        <div class="max-w-[90rem] mx-auto">
+            <!-- 核心功能内容 -->
+            <div id="content-features">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+                    <div class="max-w-2xl reveal-target">
+                        <span class="text-zinc-400 text-xs font-normal uppercase tracking-widest mb-4 block">核心能力</span>
+                        <h2 class="text-zinc-900 text-3xl md:text-5xl tracking-tight font-normal leading-tight">
+                            为探索而生，<br>
+                            为安全而造。
+                        </h2>
+                    </div>
+
+
+
+
+                    <!-- Custom Toggle Component -->
+                    <div class="flex items-center gap-4 bg-zinc-50 p-1.5 rounded-2xl border border-zinc-100 reveal-target">
+                        <button id="toggle-mainnet" class="px-5 py-2 text-xs font-normal rounded-xl bg-white shadow-sm text-zinc-900 transition-all border border-zinc-200/50">正式版</button>
+                        <button id="toggle-testnet" class="px-5 py-2 text-xs font-normal rounded-xl text-zinc-400 hover:text-zinc-600 transition-all">测试版</button>
+                    </div>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-zinc-200 border border-zinc-200 rounded-3xl overflow-hidden">
+                    <div class="bg-white p-10 group hover:bg-zinc-50 transition-colors reveal-target">
+                        <div class="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <iconify-icon icon="solar:map-point-linear" width="24" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <h3 class="text-zinc-900 text-xl font-normal tracking-tight mb-4">智能路线规划</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-8">
+                            AI算法根据你的体能、偏好、实时天气本地生成最优路线，相比传统路线规划效率提升80%。
+                        </p>
+                        <div class="pt-6 border-t border-zinc-100 flex items-center justify-between">
+                            <span class="text-zinc-400 text-xs font-mono">响应时间: 100ms</span>
+                            <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-300 group-hover:text-zinc-900" width="20"></iconify-icon>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-10 group hover:bg-zinc-50 transition-colors reveal-target">
+                        <div class="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <iconify-icon icon="solar:bag-2-linear" width="24" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <h3 class="text-zinc-900 text-xl font-normal tracking-tight mb-4">装备个性化推荐</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-8">
+                            基于出行场景、路线难度、天气数据智能匹配装备，通过质数映射保障数据永久可用，零信息丢失。
+                        </p>
+                        <div class="pt-6 border-t border-zinc-100 flex items-center justify-between">
+                            <span class="text-zinc-400 text-xs font-mono">准确率: 98.7%</span>
+                            <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-300 group-hover:text-zinc-900" width="20"></iconify-icon>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-10 group hover:bg-zinc-50 transition-colors reveal-target">
+                        <div class="w-12 h-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+                            <iconify-icon icon="solar:shield-warning-linear" width="24" stroke-width="1.5"></iconify-icon>
+                        </div>
+                        <h3 class="text-zinc-900 text-xl font-normal tracking-tight mb-4">全场景应急保障</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed mb-8">
+                            实时位置共享、一键SOS、周边救援资源同步，为你的户外安全保驾护航，状态实时同步无延迟。
+                        </p>
+                        <div class="pt-6 border-t border-zinc-100 flex items-center justify-between">
+                            <span class="text-zinc-400 text-xs font-mono">响应: 实时同步</span>
+                            <iconify-icon icon="solar:arrow-right-linear" class="text-zinc-300 group-hover:text-zinc-900" width="20"></iconify-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 社区内容 -->
+            <div id="content-community" class="relative overflow-hidden min-h-screen">
+        <!-- 3D背景效果 插入到容器内 -->
+        <div id="container"></div>
+        <div id="loading">Chargement des images...</div>
+        <div id="ui" class="hint" style="display:none;"><a href="https://unsplash.com/fr/@raaminka?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText" target="_blank" rel="noopener nofollow"></a>  <a href="https://unsplash.com/fr/@raaminka?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"  target="_blank" rel="noopener nofollow"></a>
+        </div>
+        <div class="copy"></div>
+
+        <!-- 社区前景内容 层级高于背景 -->
+        <div class="relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8 p-6 md:p-8">
+                <div class="max-w-2xl reveal-target">
+                    <span class="text-zinc-400 text-xs font-normal uppercase tracking-widest mb-4 block">内容社区</span>
+                    <h2 class="text-zinc-900 text-3xl md:text-5xl tracking-tight font-normal leading-tight">
+                        连接同好，<br>
+                        分享探索。
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Community Grid -->
+            <!-- 旋转的照片55徐 -->
+<div id="carousel">
+        <figure id="spinner">
+            <img src="https://images.unsplash.com/photo-1501761095094-94d36f57edbb?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Wanaka Tree">
+            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Still Lake">
+            <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Pink Milford Sound">
+            <img src="https://images.unsplash.com/photo-1614686454913-1e93f6f8ea1d?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Paradise">
+            <img src="https://images.unsplash.com/photo-1648659049684-323e12a52457?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Morekai">
+            <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Milky Blue Lagoon">
+            <img src="https://images.unsplash.com/photo-1516372048654-2e06f99e1382?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Lake Tekapo">
+            <img src="https://images.unsplash.com/photo-1757481214854-a41213cf176a?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Milford Sound">
+        </figure>
+    </div>
+
+    <span class="ss-icon" onclick="galleryspin('-')">&lt;</span>
+    <span class="ss-icon" onclick="galleryspin('')">&gt;</span>
+            <!-- 路线库内容 -->
+            <div id="content-routes" class="hidden">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
+                    <div class="max-w-2xl reveal-target">
+                        <span class="text-zinc-400 text-xs font-normal uppercase tracking-widest mb-4 block">热门路线</span>
+                        <h2 class="text-zinc-900 text-3xl md:text-5xl tracking-tight font-normal leading-tight">
+                            万千路线，<br>
+                            任你选择。
+                        </h2>
+                    </div>
+                    <div class="flex items-center gap-4 bg-zinc-50 p-1.5 rounded-2xl border border-zinc-100 reveal-target">
+                        <button class="px-5 py-2 text-xs font-normal rounded-xl bg-white shadow-sm text-zinc-900 transition-all border border-zinc-200/50">全部</button>
+                        <button class="px-5 py-2 text-xs font-normal rounded-xl text-zinc-400 hover:text-zinc-600 transition-all">徒步</button>
+                        <button class="px-5 py-2 text-xs font-normal rounded-xl text-zinc-400 hover:text-zinc-600 transition-all">骑行</button>
+                    </div>
+                </div>
+
+                <!-- Routes Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm group reveal-target">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" alt="路线">
+                            <span class="absolute top-3 left-3 bg-emerald-500 text-white text-xs px-2 py-1 rounded-full">热门</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">武功山全程徒步</h3>
+                            <p class="text-zinc-500 text-sm mb-4">江西萍乡，全程32km，难度中等，适合有一定基础的户外爱好者</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <iconify-icon icon="solar:star-bold" width="14" class="text-yellow-500">
+                                    <span class="text-xs text-zinc-600">4.9 / 5.0</span>
+                                </iconify-icon></div>
+                                <button class="text-xs text-blue-600 hover:text-blue-800">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm group reveal-target">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" alt="路线">
+                            <span class="absolute top-3 left-3 bg-blue-500 text-white text-xs px-2 py-1 rounded-full">骑行</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">环青海湖骑行</h3>
+                            <p class="text-zinc-500 text-sm mb-4">青海西宁，全程360km，难度中等，新手也能挑战</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <iconify-icon icon="solar:star-bold" width="14" class="text-yellow-500">
+                                    <span class="text-xs text-zinc-600">4.8 / 5.0</span>
+                                </iconify-icon></div>
+                                <button class="text-xs text-blue-600 hover:text-blue-800">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm group reveal-target">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" alt="路线">
+                            <span class="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full">进阶</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">贡嘎雪山转山</h3>
+                            <p class="text-zinc-500 text-sm mb-4">四川甘孜，全程70km，难度高，适合资深户外爱好者</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <iconify-icon icon="solar:star-bold" width="14" class="text-yellow-500">
+                                    <span class="text-xs text-zinc-600">4.9 / 5.0</span>
+                                </iconify-icon></div>
+                                <button class="text-xs text-blue-600 hover:text-blue-800">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm group reveal-target">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" alt="路线">
+                            <span class="absolute top-3 left-3 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">露营</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">雨崩徒步露营</h3>
+                            <p class="text-zinc-500 text-sm mb-4">云南迪庆，全程56km，难度中等，体验原始村落风光</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <iconify-icon icon="solar:star-bold" width="14" class="text-yellow-500">
+                                    <span class="text-xs text-zinc-600">4.7 / 5.0</span>
+                                </iconify-icon></div>
+                                <button class="text-xs text-blue-600 hover:text-blue-800">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm group reveal-target">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" alt="路线">
+                            <span class="absolute top-3 left-3 bg-emerald-500 text-white text-xs px-2 py-1 rounded-full">新手</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">徽杭古道徒步</h3>
+                            <p class="text-zinc-500 text-sm mb-4">安徽宣城，全程16km，难度低，入门户外首选</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <iconify-icon icon="solar:star-bold" width="14" class="text-yellow-500">
+                                    <span class="text-xs text-zinc-600">4.6 / 5.0</span>
+                                </iconify-icon></div>
+                                <button class="text-xs text-blue-600 hover:text-blue-800">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-zinc-300 transition-colors shadow-sm group reveal-target">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" alt="路线">
+                            <span class="absolute top-3 left-3 bg-purple-500 text-white text-xs px-2 py-1 rounded-full">新上线</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-medium text-zinc-900 mb-2">四姑娘山徒步</h3>
+                            <p class="text-zinc-500 text-sm mb-4">四川阿坝，全程48km，难度中高，欣赏雪山冰川风光</p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <iconify-icon icon="solar:star-bold" width="14" class="text-yellow-500">
+                                    <span class="text-xs text-zinc-600">4.8 / 5.0</span>
+                                </iconify-icon></div>
+                                <button class="text-xs text-blue-600 hover:text-blue-800">查看详情</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: MARKETING HERO & EDITOR PREVIEW (DARK) -->
+    <section class="relative z-10 py-24 bg-[#0A0A0A] border-t border-white/10">
+      <div class="mx-auto max-w-7xl px-4 pb-8 md:px-6">
+        <div class="max-w-3xl text-center mx-auto">
+          <p class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-normal text-slate-300 reveal-target">
+            <iconify-icon icon="solar:star-fall-linear" width="16" stroke-width="1.5" class="text-sky-400"></iconify-icon>
+            新功能：一键生成专属路书
+          </p>
+          <h2 class="sm:text-5xl md:text-6xl text-4xl font-normal tracking-tight text-white leading-tight reveal-target">
+            探索山野，快人一步
+          </h2>
+          <p class="mt-5 text-base md:text-lg text-slate-400 font-light reveal-target">
+            荒野路书是一站式户外出行助手，让你轻松规划路线、管理装备、连接同好，无需专业经验也能安心探索户外。
+          </p>
+
+          <div class="flex flex-col gap-3 sm:flex-row mt-8 items-center justify-center reveal-target">
+
+            <a href="#trial" type="button" class="group hover:scale-95 transition-transform" style="cursor: pointer; position: relative; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; background: radial-gradient(65.28% 65.28% at 50% 100%, rgba(34, 211, 238, 0.8) 0%, rgba(34, 211, 238, 0) 100%), linear-gradient(0deg, #2563eb, #2563eb); border-radius: 0.75rem; padding: 12px 18px; min-height: 48px; min-width: 102px;">
+
+              <!-- Background gradients / borders -->
+              <span style="position: absolute; inset: 1px; background: linear-gradient(177.95deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0) 100%); border-radius: calc(0.75rem - 1px); z-index: 0;"></span>
+              <span style="position: absolute; inset: 2px; background: radial-gradient(65.28% 65.28% at 50% 100%, rgba(34, 211, 238, 0.8) 0%, rgba(34, 211, 238, 0) 100%), linear-gradient(0deg, #2563eb, #2563eb); border-radius: calc(0.75rem - 2px); z-index: 0;"></span>
+
+              <!-- Floating Points Container -->
+              <div style="overflow: hidden; width: 100%; height: 100%; pointer-events: none; position: absolute; z-index: 1;">
+                <i style="bottom: -10px; position: absolute; animation: floating-points 2.35s infinite ease-in-out 0.2s; width: 2px; height: 2px; background-color: #fff; border-radius: 9999px; left: 10%;"></i>
+                <i style="bottom: -10px; position: absolute; animation: floating-points 2.5s infinite ease-in-out 0.5s; width: 2px; height: 2px; background-color: #fff; border-radius: 9999px; left: 30%; opacity: 0.7;"></i>
+                <i style="bottom: -10px; position: absolute; animation: floating-points 2.2s infinite ease-in-out 0.1s; width: 2px; height: 2px; background-color: #fff; border-radius: 9999px; left: 25%; opacity: 0.8;"></i>
+                <i style="bottom: -10px; position: absolute; animation: floating-points 2.05s infinite ease-in-out; width: 2px; height: 2px; background-color: #fff; border-radius: 9999px; left: 44%; opacity: 0.6;"></i>
+                <i style="bottom: -10px; position: absolute; animation: floating-points 1.9s infinite ease-in-out; width: 2px; height: 2px; background-color: #fff; border-radius: 9999px; left: 50%;"></i>
+                <i style="bottom: -10px; position: absolute; animation: floating-points 1.5s infinite ease-in-out 1.5s; width: 2px; height: 2px; background-color: #fff; border-radius: 9999px; left: 75%; opacity: 0.5;"></i>
+              </div>
+
+              <!-- Button Content -->
+              <span style="z-index: 2; gap: 6px; position: relative; width: 100%; color: white; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 400; transition: color 0.2s ease-in-out;">
+                免费试用
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="group-hover:translate-x-1 transition-transform" style="width: 16px; height: 16px;">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </span>
+            </a>
+
+            <a href="#demo" class="group relative inline-flex items-center justify-center min-w-[120px] cursor-pointer rounded-xl px-[17px] py-[12px] text-white/70 tracking-tight font-normal transition-all duration-[1000ms] hover:-translate-y-[3px] hover:scale-[1.05] hover:text-white" style="box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1);background:radial-gradient(ellipse at bottom,rgba(71,81,92,1) 0%,rgba(0,0,0,1) 100%);">
+              <span class="relative z-10 font-normal text-sm">查看演示</span>
+              <span aria-hidden="true" class="absolute bottom-0 left-1/2 h-[1px] w-[70%] -translate-x-1/2 opacity-20 transition-all duration-[1000ms] group-hover:opacity-80" style="background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);"></span>
+            </a>
+          </div>
+
+          <div class="mt-8 flex items-center justify-center gap-3 text-xs text-slate-500 reveal-target">
+            <div class="flex -space-x-2">
+              <img class="h-6 w-6 rounded-full ring-2 ring-[#0A0A0A] object-cover grayscale opacity-70" src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/9c519027-8b76-493a-ae3c-8cf962ccdf04_320w.jpg" alt="">
+              <img class="h-6 w-6 rounded-full ring-2 ring-[#0A0A0A] object-cover grayscale opacity-70" src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/8d3cb9d4-adbe-41e5-a351-a4a6c22d6037_800w.jpg" alt="">
+              <img class="h-6 w-6 rounded-full ring-2 ring-[#0A0A0A] object-cover grayscale opacity-70" src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/69c45eba-968b-45e3-aff1-ebab9cb7b543_320w.jpg" alt="">
+            </div>
+            <span>已获得数万户外爱好者的信赖</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor preview -->
+      <div class="max-w-7xl mx-auto md:px-6 px-4 pb-12 reveal-target">
+        <div class="relative w-full overflow-hidden shadow-black/50 bg-gradient-to-b from-white/[0.04] to-white/[0.01] border-white/10 border rounded-2xl mx-auto shadow-2xl backdrop-blur-lg">
+
+          <!-- Topbar -->
+          <div class="flex items-center justify-between border-b border-white/10 px-3 py-2">
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-white/20"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-white/20"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-white/20"></span>
+              <div class="ml-3 hidden items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-2 py-1 text-xs text-slate-400 sm:flex font-mono">
+                <iconify-icon icon="solar:sidebar-minimalistic-linear" width="14" stroke-width="1.5"></iconify-icon>
+                荒野路书 — 项目: 我的徒步计划
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button class="hidden rounded-md border border-white/10 bg-white/5 p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition-colors sm:inline-flex"><iconify-icon icon="solar:share-linear" width="16" stroke-width="1.5"></iconify-icon></button>
+              <button class="hidden rounded-md border border-white/10 bg-white/5 p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition-colors sm:inline-flex"><iconify-icon icon="solar:users-group-rounded-linear" width="16" stroke-width="1.5"></iconify-icon></button>
+              <button class="rounded-md bg-white px-4 py-1.5 text-xs font-medium text-black hover:bg-zinc-200 transition-colors">发布路书</button>
+            </div>
+          </div>
+
+          <!-- Editor body -->
+          <div class="grid grid-cols-1 md:grid-cols-12">
+            <!-- Left panel -->
+            <aside class="hidden md:block md:col-span-3 bg-black/40 border-white/10 border-r p-3">
+              <div class="mb-3 flex items-center justify-between">
+                <div class="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs font-normal text-slate-300">
+                  <iconify-icon icon="solar:siderbar-linear" width="14" stroke-width="1.5"></iconify-icon>
+                  个人
+                </div>
+                <button class="rounded-md border border-white/10 bg-white/5 p-1 text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
+                  <iconify-icon icon="solar:magnifer-linear" width="16" stroke-width="1.5"></iconify-icon>
+
+              </button></div>
+
+
+              <div class="space-y-1 text-slate-400">
+<div class="space-y-1 text-slate-400">
+  <div class="bg-white/5 rounded-lg p-4 space-y-4">
+    <!-- 用户信息头部 -->
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3 text-white/90">
+        <!-- 头像 -->
+        <img
+          src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&q=80&w=320"
+          class="w-10 h-10"
+          alt=""
+        >
+        <!-- 名称 -->
+        <span class="text-base font-semibold">李先生</span>
+      </div>
+
+
+    <!-- 功能菜单 -->
+    <ul class="space-y-1 pl-2 text-sm font-normal">
+      <li class="menu-item flex items-center gap-2 rounded-md bg-white/10 text-white px-3 py-2">
+        <iconify-icon icon="solar:layers-linear" width="16" stroke-width="1.5"></iconify-icon>
+        配速
+      </li>
+      <li class="menu-item flex items-center gap-2 rounded-md px-3 py-2 hover:bg-white/5 transition-colors">
+        <iconify-icon icon="solar:gallery-linear" width="16" stroke-width="1.5"></iconify-icon>
+        卡路里消耗
+      </li>
+      <li class="menu-item flex items-center gap-2 rounded-md px-3 py-2 hover:bg-white/5 transition-colors">
+        <iconify-icon icon="solar:widget-linear" width="16" stroke-width="1.5"></iconify-icon>
+        运动时长
+      </li>
+      <li class="menu-item flex items-center gap-2 rounded-md px-3 py-2 hover:bg-white/5 transition-colors">
+        <iconify-icon icon="solar:card-linear" width="16" stroke-width="1.5"></iconify-icon>
+        心率实时
+      </li>
+      <li class="menu-item flex items-center gap-2 rounded-md px-3 py-2 hover:bg-white/5 transition-colors">
+        <iconify-icon icon="solar:chat-round-line-linear" width="16" stroke-width="1.5"></iconify-icon>
+        血氧检测
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+                <div class="bg-white/5 rounded-lg p-2 space-y-3">
+                  <div class="mb-1 flex items-center gap-2 text-white/90">
+                    <iconify-icon icon="solar:box-linear" width="14" stroke-width="1.5"></iconify-icon>
+                    <span class="text-xs font-medium">路书素材</span>
+                  </div>
+
+
+
+                  <div class="grid grid-cols-3 gap-2">
+
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1544191696-102dbdaeeaa0?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1501761095094-94d36f57edbb?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+
+
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1638271330581-af7c3b4080e5?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+
+
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1625456824581-7d2c33d54dce?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+
+                       <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1542235222-30e843cb43a1?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+                    <div class="aspect-video overflow-hidden rounded-md bg-white/5">
+                      <img src="https://images.unsplash.com/photo-1595960684234-49d2a004e753?auto=format&amp;fit=crop&amp;q=80&amp;w=320" class="h-full w-full object-cover opacity-60 " alt="">
+                    </div>
+
+
+                  </div>
+
+                </div>
+              </div>
+            </aside>
+
+            <!-- Canvas -->
+            <main class="relative md:col-span-6 bg-black/50">
+              <div class="flex items-center gap-2 border-b border-white/10 px-3 py-2 text-xs text-slate-400">
+                <iconify-icon icon="solar:devices-linear" width="16" stroke-width="1.5"></iconify-icon>
+                <span>断点预览</span>
+                <span class="rounded-md bg-white/5 px-1.5 py-0.5 text-white">桌面端</span>
+                <span class="text-slate-600">|</span>
+                <span class="font-mono">1200</span>
+                <div class="ml-auto flex items-center gap-1">
+                  <button class="rounded-md border border-white/10 bg-white/5 p-1 hover:text-white hover:bg-white/10 transition-colors"><iconify-icon icon="solar:undo-left-linear" width="16" stroke-width="1.5"></iconify-icon></button>
+                  <button class="rounded-md border border-white/10 bg-white/5 p-1 hover:text-white hover:bg-white/10 transition-colors"><iconify-icon icon="solar:redo-right-linear" width="16" stroke-width="1.5"></iconify-icon></button>
+                </div>
+              </div>
+
+              <div class="p-4 sm:p-6">
+                <div class="relative overflow-hidden rounded-xl border border-white/10 bg-white/5 ring-1 ring-white/10">
+                  <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&amp;fit=crop&amp;q=80&amp;w=1600" class="h-[360px] w-full object-cover sm:h-[460px] opacity-80" alt="">
+                  <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/90 via-[#0A0A0A]/40 to-transparent"></div>
+                  <div class="absolute bottom-6 left-6 right-6">
+                    <div class="max-w-xl rounded-xl border border-white/10 bg-[#0A0A0A]/60 p-4 backdrop-blur-md">
+                      <h3 class="text-3xl sm:text-4xl font-normal tracking-tight text-white mb-2">荒野路书工作台</h3>
+                      <p class="mt-1 text-sm text-slate-300 font-light leading-relaxed">无限创作画布，内置智能路线规划、装备管理、应急保障功能，为你的每一次户外出行保驾护航。</p>
+                      <div class="mt-4 flex items-center gap-2">
+                        <button class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-normal text-black hover:bg-zinc-200 transition-colors">
+                          <iconify-icon icon="solar:magic-stick-3-linear" width="14" stroke-width="1.5"></iconify-icon>
+                          自动规划
+
+                        </button><button class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-normal text-slate-200 hover:bg-white/10 transition-colors">
+                          <iconify-icon icon="solar:move-linear" width="14" stroke-width="1.5"></iconify-icon>
+                          手动调整
+
+                      </button></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Mini device preview -->
+                <div class="pointer-events-none absolute -bottom-6 right-4 hidden w-64 rounded-xl border border-white/10 bg-[#0A0A0A]/60 p-2 backdrop-blur-lg lg:block">
+                  <div class="rounded-lg border border-white/10 bg-black/80 p-2">
+                    <div class="aspect-[9/16] overflow-hidden rounded-md border border-white/5">
+                      <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="h-full w-full object-cover opacity-80" alt="">
+                    </div>
+                    <div class="mt-2 flex items-center justify-between text-xs text-slate-500">
+                      <span class="inline-flex items-center gap-1"><iconify-icon icon="solar:smartphone-linear" width="12" stroke-width="1.5"></iconify-icon> 移动端 390</span>
+                      <span class="rounded bg-white/5 px-1.5 py-0.5 text-xs font-mono">预览</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </main>
+
+            <!-- Right panel -->
+            <aside class="hidden md:block md:col-span-3 border-l border-white/10 bg-black/40 p-3">
+              <div class="mb-3 flex items-center justify-between">
+                <div class="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-2 py-1 text-xs font-normal text-slate-300">
+                  <iconify-icon icon="solar:slider-horizontal-linear" width="14" stroke-width="1.5"></iconify-icon>
+                  路线属性
+                </div>
+                <button class="rounded-md border border-white/10 bg-white/5 p-1 text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
+                  <iconify-icon icon="solar:menu-dots-linear" width="16" stroke-width="1.5"></iconify-icon>
+
+              </button></div>
+
+              <div class="space-y-3">
+                <div class="bg-white/5 rounded-lg p-3 space-y-3">
+                  <div class="mb-2 flex items-center justify-between text-xs">
+                    <span class="text-slate-400">位置</span>
+                    <span class="rounded-md bg-white/5 px-2 py-0.5 text-xs text-slate-300 font-mono">相对</span>
+                  </div>
+                  <div class="grid grid-cols-3 gap-2 text-xs">
+                    <button class="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-slate-400 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-1"><iconify-icon icon="solar:align-top-linear" width="14" stroke-width="1.5"></iconify-icon>起点</button>
+                    <button class="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-slate-400 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-1"><iconify-icon icon="solar:align-vertical-center-linear" width="14" stroke-width="1.5"></iconify-icon>中点</button>
+                    <button class="rounded-md border border-white/10 bg-white/5 px-2 py-1 text-slate-400 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-1"><iconify-icon icon="solar:align-bottom-linear" width="14" stroke-width="1.5"></iconify-icon>终点</button>
+                  </div>
+                </div>
+
+                <div class="bg-white/5 rounded-lg p-3 space-y-3">
+                  <div class="mb-2 flex items-center justify-between text-xs">
+                    <span class="text-slate-400 font-normal">尺寸</span>
+                    <span class="rounded-md bg-white/5 px-2 py-0.5 text-xs text-slate-300 font-mono">自动</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2 text-xs">
+                    <div class="rounded-md border border-white/10 bg-[#0A0A0A]/60 px-2 py-1.5 text-slate-400 font-mono text-center">长: 12.5km</div>
+                    <div class="rounded-md border border-white/10 bg-[#0A0A0A]/60 px-2 py-1.5 text-slate-400 font-mono text-center">时: 6h</div>
+                  </div>
+                  <div class="mt-2 grid grid-cols-4 gap-2 text-xs">
+                    <button class="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-slate-400 font-normal hover:bg-white/10 hover:text-white transition-colors">填充</button>
+                    <button class="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-slate-400 font-normal hover:bg-white/10 hover:text-white transition-colors">适配</button>
+                    <button class="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-slate-400 font-normal hover:bg-white/10 hover:text-white transition-colors">固定</button>
+                    <button class="rounded-md border border-white/10 bg-white/5 px-2 py-1.5 text-slate-400 font-normal hover:bg-white/10 hover:text-white transition-colors">最小</button>
+                  </div>
+                </div>
+
+                <div class="bg-white/5 rounded-lg p-3 space-y-3">
+                  <div class="mb-2 flex items-center justify-between text-xs">
+                    <span class="text-slate-400">效果</span>
+                    <span class="rounded-md bg-white/5 px-2 py-0.5 text-xs text-slate-300 font-mono">3</span>
+                  </div>
+                  <div class="space-y-3 text-xs">
+                    <div class="flex items-center justify-between">
+                      <span class="inline-flex items-center gap-1.5 text-slate-300"><iconify-icon icon="solar:drop-linear" width="14" stroke-width="1.5" class="text-sky-400"></iconify-icon>模糊</span>
+                      <span class="rounded bg-white/5 px-1.5 py-0.5 text-slate-400 font-mono">8px</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="inline-flex items-center gap-1.5 text-slate-300"><iconify-icon icon="solar:sun-linear" width="14" stroke-width="1.5" class="text-white/60"></iconify-icon>辉光</span>
+                      <span class="rounded bg-white/5 px-1.5 py-0.5 text-slate-400 font-mono">20%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                      <span class="inline-flex items-center gap-1.5 text-slate-300"><iconify-icon icon="solar:layers-linear" width="14" stroke-width="1.5" class="text-white/60"></iconify-icon>混合</span>
+                      <span class="rounded bg-white/5 px-1.5 py-0.5 text-slate-400 font-mono">叠加</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: FEATURE SHOWCASE (DARK/GLASS) -->
+    <section class="max-w-7xl relative bg-white/5 border-white/10 border rounded-[2rem] mx-auto my-24 p-8 lg:p-12 backdrop-blur-md">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start relative z-10">
+
+          <!-- Left: Heading + copy -->
+          <div class="flex flex-col min-h-full justify-between">
+            <div>
+              <span class="text-xs font-normal uppercase tracking-widest text-white/50 block mb-4 reveal-target">功能界面</span>
+              <h2 class="text-4xl sm:text-5xl lg:text-6xl leading-[1.05] tracking-tight text-white reveal-target">
+                为高效探索打造的智能助手。
+              </h2>
+
+              <div class="mt-12 relative">
+                <div class="hidden sm:flex flex-col gap-8 relative text-white/70">
+                  <div class="relative reveal-target">
+                    <div class="absolute left-2 top-8 bottom-0 w-px bg-gradient-to-b from-white/30 via-white/10 to-transparent"></div>
+                    <div class="flex gap-6 items-start">
+                      <div class="flex-shrink-0 w-4 h-4 z-10 relative bg-[#0A0A0A] border-white/30 border rounded-full mt-1 flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 bg-white/80 rounded-full"></div>
+                      </div>
+                      <div class="flex-1 pb-4">
+                        <span class="text-sm font-medium text-white">智能路线吸附</span>
+                        <p class="text-sm font-light text-white/50 mt-1.5 leading-relaxed">智能吸附轨迹点，精准调整路线，确保每一段轨迹都完美贴合实际地形。</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="relative reveal-target">
+                    <div class="absolute left-2 top-8 bottom-0 w-px bg-gradient-to-b from-white/30 via-white/10 to-transparent"></div>
+                    <div class="flex gap-6 items-start">
+                      <div class="flex-shrink-0 w-4 h-4 rounded-full border border-white/30 bg-[#0A0A0A] z-10 relative mt-1 flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 rounded-full bg-white/80"></div>
+                      </div>
+                      <div class="flex-1 pb-4">
+                        <span class="text-sm font-medium text-white">实时位置同步</span>
+                        <p class="text-sm font-light text-white/50 mt-1.5 leading-relaxed">自动同步所有队友的实时位置，跨设备状态一致，随时掌握团队动态。</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="relative reveal-target">
+                    <div class="flex items-start gap-6">
+                      <div class="flex-shrink-0 w-4 h-4 rounded-full border border-white/30 bg-[#0A0A0A] z-10 relative mt-1 flex items-center justify-center">
+                        <div class="w-1.5 h-1.5 rounded-full bg-white/80"></div>
+                      </div>
+                      <div class="flex-1">
+                        <span class="text-sm font-medium text-white">户外状态监测</span>
+                        <p class="text-sm font-light text-white/50 mt-1.5 leading-relaxed">原生集成实时天气、海拔、心率监测，全方位掌握你的户外状态。</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-full mt-12 pt-8 border-t border-white/10 reveal-target">
+              <div>
+                <p class="text-sm font-medium text-white tracking-tight">加速你的每一次出行</p>
+                <p class="text-sm font-light text-white/50 mt-2 max-w-sm leading-relaxed">
+                  精准轨迹编辑、智能路线调整、风险自动检测，AI辅助规划让你全程专注探索。
+                </p>
+                <a href="#features" class="inline-flex items-center justify-center gap-3 h-12 hover:bg-white/90 transition text-sm font-normal text-black bg-white rounded-full mt-6 px-6 max-w-sm">
+                  探索全部功能
+                  <iconify-icon icon="solar:arrow-right-linear" width="16" stroke-width="1.5"></iconify-icon>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Project grid (screens) -->
+          <div class="grid grid-cols-2 gap-4 relative">
+            <article class="relative overflow-hidden aspect-[4/3] bg-center bg-cover border border-white/10 rounded-2xl group reveal-target">
+              <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700 mix-blend-luminosity" alt="">
+              <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-black/80"></div>
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center justify-center w-8 h-8 text-white/90 bg-black/40 border-white/10 border rounded-full backdrop-blur-md">
+                  <iconify-icon icon="solar:scissors-linear" width="16" stroke-width="1.5"></iconify-icon>
+                </span>
+              </div>
+              <div class="absolute top-3 right-3">
+                <span class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-white bg-black/40 border-white/10 border rounded-full py-1.5 px-3 backdrop-blur-md font-mono">路线编辑</span>
+              </div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <p class="text-white text-lg font-medium tracking-tight leading-tight">精准轨迹调整</p>
+              </div>
+            </article>
+
+            <article class="relative overflow-hidden aspect-[4/3] bg-center bg-cover border border-white/10 rounded-2xl group reveal-target">
+              <img src="https://images.unsplash.com/photo-1522163182402-834f871fd851?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700 mix-blend-luminosity" alt="">
+              <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-black/80"></div>
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center justify-center w-8 h-8 text-white/90 bg-black/40 border-white/10 border rounded-full backdrop-blur-md">
+                  <iconify-icon icon="solar:clapperboard-linear" width="16" stroke-width="1.5"></iconify-icon>
+                </span>
+              </div>
+              <div class="absolute top-3 right-3">
+                <span class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-white bg-black/40 border-white/10 border rounded-full py-1.5 px-3 backdrop-blur-md font-mono">多设备</span>
+              </div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <p class="text-white text-lg font-medium tracking-tight leading-tight">秒级同步</p>
+              </div>
+            </article>
+
+            <article class="relative overflow-hidden aspect-[4/5] bg-center bg-cover border border-white/10 rounded-2xl group reveal-target">
+              <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700 mix-blend-luminosity" alt="">
+              <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-black/80"></div>
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center justify-center w-8 h-8 text-white/90 bg-black/40 border-white/10 border rounded-full backdrop-blur-md">
+                  <iconify-icon icon="solar:volume-high-linear" width="16" stroke-width="1.5"></iconify-icon>
+                </span>
+              </div>
+              <div class="absolute top-3 right-3">
+                <span class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-white bg-black/40 border-white/10 border rounded-full py-1.5 px-3 backdrop-blur-md font-mono">导航</span>
+              </div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <p class="text-white text-lg font-medium tracking-tight leading-tight">离线语音导航</p>
+              </div>
+            </article>
+
+            <article class="relative overflow-hidden aspect-[4/5] bg-center bg-cover border border-white/10 rounded-2xl group reveal-target">
+              <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700 mix-blend-luminosity" alt="">
+              <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-black/80"></div>
+              <div class="absolute top-3 left-3">
+                <span class="inline-flex items-center justify-center w-8 h-8 text-white/90 bg-black/40 border-white/10 border rounded-full backdrop-blur-md">
+                  <iconify-icon icon="solar:cloud-linear" width="16" stroke-width="1.5"></iconify-icon>
+                </span>
+              </div>
+              <div class="absolute top-3 right-3">
+                <span class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-white bg-black/40 border-white/10 border rounded-full py-1.5 px-3 backdrop-blur-md font-mono">天气</span>
+              </div>
+              <div class="absolute bottom-4 left-4 right-4">
+                <p class="text-white text-lg font-medium tracking-tight leading-tight">实时天气预警</p>
+              </div>
+            </article>
+          </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: ENTERPRISE AI TESTIMONIAL & STATS (LIGHT) -->
+    <section class="overflow-hidden bg-zinc-50 border-white/10 border-t py-24 lg:py-32 relative">
+      <div class="max-w-[90rem] mx-auto px-6 lg:px-24 z-10 relative">
+
+        <!-- Section Header -->
+        <div class="flex flex-col lg:flex-row justify-between items-start mb-20 gap-10">
+          <h2 class="text-3xl md:text-5xl tracking-tight text-zinc-900 max-w-3xl leading-tight font-normal reveal-target">
+            帮助每一位户外爱好者，打造<span class="text-zinc-400 font-medium">智能户外服务</span>，重新定义国内户外出行体验
+          </h2>
+          <a href="#" class="group flex items-center gap-2 text-sm font-normal text-zinc-900 border-b border-zinc-300 pb-1 hover:border-zinc-900 transition-all mt-2 reveal-target">
+            开启你的探索
+            <iconify-icon icon="solar:arrow-right-up-linear" width="16" stroke-width="1.5"></iconify-icon>
+          </a>
+        </div>
+
+        <!-- Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          <!-- Card 1: Testimonial -->
+          <div class="bg-white p-8 rounded-3xl flex flex-col justify-between h-[520px] shadow-sm border border-zinc-200 hover:border-zinc-300 transition-colors reveal-target">
+            <div>
+              <h3 class="text-lg font-medium text-zinc-900 mb-6 leading-tight tracking-tight">
+                智能的算法，<br>看得见的提升。
+              </h3>
+              <p class="text-zinc-500 font-light leading-relaxed text-sm">
+                “荒野路书完美捕捉了我们户外出行的需求，把复杂的路线规划、装备准备变成了简单的一键操作，高效又省心，完全改变了我们的户外出行方式。”
+              </p>
+            </div>
+            <div class="mt-8 border-t border-zinc-100 pt-6">
+              <div class="flex items-center justify-between mb-4 text-zinc-400">
+                 <iconify-icon icon="solar:map-linear" width="24" stroke-width="1.5"></iconify-icon>
+              </div>
+              <div class="flex items-center gap-3">
+                <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/variants/7e5a48f3-c2f2-4588-8f22-259764a5d0fb/320w.png" alt="用户" class="w-10 h-10 rounded-full object-cover grayscale">
+                <div>
+                  <div class="text-sm font-medium text-zinc-900 leading-none mb-1">李明</div>
+                  <div class="text-xs text-zinc-400 font-normal">资深户外爱好者</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Brand Image -->
+          <div class="relative rounded-3xl overflow-hidden h-[520px] group bg-[#0A0A0A] shadow-md border border-zinc-200 reveal-target">
+            <img src="https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="团队" class="transition-transform duration-1000 group-hover:scale-105 group-hover:opacity-100 opacity-70 w-full h-full object-cover absolute inset-0 mix-blend-luminosity">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+            <div class="flex flex-col z-10 text-white p-8 absolute inset-0 justify-between">
+              <div class="flex justify-between items-start">
+                <span class="text-sm font-normal tracking-wide">荒野实验室©</span>
+              </div>
+              <span class="text-xs font-mono opacity-60 uppercase tracking-widest ml-auto">成立于2024</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Stats -->
+          <div class="bg-white p-8 rounded-3xl flex flex-col items-center justify-between h-[520px] shadow-sm border border-zinc-200 hover:border-zinc-300 transition-colors relative overflow-hidden group reveal-target">
+            <!-- Decorative Background Rings -->
+            <div class="absolute inset-0 pointer-events-none opacity-[0.03] flex items-center justify-center">
+               <svg viewBox="0 0 100 100" class="w-full h-full stroke-zinc-900 fill-none" stroke-width="0.5">
+                 <circle cx="50" cy="50" r="20"></circle>
+                 <circle cx="50" cy="50" r="35"></circle>
+                 <circle cx="50" cy="50" r="48"></circle>
+               </svg>
+            </div>
+
+            <div class="text-center relative z-10 mt-4 w-full">
+              <span class="text-xs text-zinc-400 font-mono uppercase tracking-widest block mb-2">效率提升</span>
+              <span class="text-lg font-medium text-zinc-900 tracking-tight">路线规划效率</span>
+            </div>
+
+            <!-- Circle Chart -->
+            <div class="relative w-56 h-56 flex items-center justify-center">
+               <div class="flex flex-col absolute inset-0 items-center justify-center">
+                 <div class="text-5xl font-normal text-zinc-900 tracking-tighter mb-4">+88%</div>
+               </div>
+            </div>
+
+            <button class="w-full bg-zinc-900 text-white text-sm font-normal py-4 rounded-xl hover:bg-zinc-800 transition-colors transform group-hover:-translate-y-1">
+              查看用户案例
+
+          </button></div>
+
+          <!-- Card 4: Contact -->
+          <div class="flex flex-col overflow-hidden group text-white bg-zinc-900 h-[520px] rounded-3xl p-8 relative shadow-md justify-between border border-zinc-800 reveal-target">
+            <!-- Background Image -->
+            <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?auto=format&amp;fit=crop&amp;q=80&amp;w=800" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen" alt="">
+            <!-- Gradient Glow -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/10 transition-colors duration-500"></div>
+
+            <div class="flex justify-between items-start relative z-10">
+              <span class="text-lg font-medium tracking-tight">咨询我们</span>
+              <iconify-icon icon="solar:arrow-right-up-linear" width="20" stroke-width="1.5"></iconify-icon>
+            </div>
+
+            <div class="relative z-10 mt-auto mb-12">
+              <p class="leading-relaxed text-xl text-white/90 font-light max-w-[260px] tracking-tight">
+                让我们开启一段新的探索 — 无论你是资深驴友还是入门新手，我们都能帮你打造专属的户外出行方案。
+              </p>
+            </div>
+
+            <div class="space-y-3 text-sm text-white/50 relative z-10 font-mono">
+              <div class="hover:text-white cursor-pointer transition-colors flex group/link items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover/link:opacity-100 transition-opacity"></span>
+                hello@wilderness.app
+              </div>
+              <div class="hover:text-white cursor-pointer transition-colors flex group/link items-center gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-white opacity-0 group-hover/link:opacity-100 transition-opacity"></span>
+                400-019-2834
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: DARK FUTURISTIC FOOTER -->
+    <footer class="bg-[#050505] w-full pt-32 pb-0 relative border-t border-white/5 overflow-hidden">
+
+        <!-- Floating Pill / Newsletter Input -->
+        <div class="flex z-30 px-6 absolute top-12 right-0 left-0 justify-center reveal-target">
+            <div class="bg-[#0A0A0A]/80 backdrop-blur-md border border-white/10 rounded-full py-2.5 pl-6 pr-2.5 flex items-center gap-4 shadow-2xl max-w-lg w-full group transition-all hover:border-white/20">
+                <span class="text-neutral-500 text-xs font-mono hidden sm:block">重新定义户外出行，每一步都安心。</span>
+                <input type="text" placeholder="输入邮箱获取内测资格..." class="bg-transparent border-none outline-none text-white text-sm w-full sm:w-auto placeholder:text-neutral-700 font-mono flex-1">
+                <button class="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center hover:bg-zinc-300 transition-colors shrink-0">
+                    <iconify-icon icon="solar:arrow-right-linear" width="16" stroke-width="1.5"></iconify-icon>
+
+            </button></div>
+        </div>
+
+        <!-- Background Decorative Tabs -->
+        <div class="max-w-[90%] mx-auto flex items-end gap-4 relative z-10 translate-y-2 opacity-50 hover:opacity-100 transition-opacity duration-500 reveal-target">
+            <!-- Active Tab Visual -->
+            <div class="h-16 w-48 bg-[#080808] border-t border-x border-white/10 rounded-t-2xl flex items-center justify-center gap-2 relative z-20">
+                 <iconify-icon icon="solar:code-square-linear" width="18" stroke-width="1.5" class="text-white"></iconify-icon>
+                 <span class="text-xs font-medium text-white uppercase tracking-widest font-mono">路线规划</span>
+            </div>
+            <!-- Inactive Tab 1 -->
+            <div class="h-12 w-40 bg-[#050505] border-t border-x border-white/5 rounded-t-xl flex items-center justify-center gap-2 relative z-10 hover:bg-[#080808] hover:h-14 transition-all cursor-pointer group">
+                 <iconify-icon icon="solar:users-group-rounded-linear" width="18" stroke-width="1.5" class="text-neutral-600 group-hover:text-white transition-colors"></iconify-icon>
+                 <span class="text-xs font-normal text-neutral-600 uppercase tracking-widest group-hover:text-white transition-colors font-mono">社区</span>
+            </div>
+            <!-- Inactive Tab 2 -->
+            <div class="h-12 w-40 bg-[#050505] border-t border-x border-white/5 rounded-t-xl flex items-center justify-center gap-2 relative z-10 hover:bg-[#080808] hover:h-14 transition-all cursor-pointer group">
+                 <iconify-icon icon="solar:document-text-linear" width="18" stroke-width="1.5" class="text-neutral-600 group-hover:text-white transition-colors"></iconify-icon>
+                 <span class="text-xs font-normal text-neutral-600 uppercase tracking-widest group-hover:text-white transition-colors font-mono">法律</span>
+            </div>
+        </div>
+
+        <!-- Main Footer Card Container -->
+        <div class="w-full bg-[#080808] border-t border-white/10 rounded-t-[3rem] relative z-20 overflow-hidden">
+
+            <div class="w-full px-6 lg:px-24 py-20 lg:py-32 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 relative z-20">
+
+                <!-- Left Content: Slogan -->
+                <div class="lg:col-span-7 flex flex-col justify-center reveal-target">
+                    <h2 class="text-5xl lg:text-[6rem] leading-[0.9] font-normal text-white tracking-tighter mb-12">
+                        智能的.<br>
+                        <span class="italic text-white/40">个性的.</span><br>
+                        安全的.
+                    </h2>
+
+                    <!-- Company Logos (Lettermarks) -->
+                    <div class="flex flex-wrap gap-10 items-center mt-auto">
+                        <span class="text-white/30 hover:text-white transition-colors font-medium tracking-tighter text-xl cursor-pointer">徒步</span>
+                        <span class="text-white/30 hover:text-white transition-colors font-medium tracking-tighter text-xl cursor-pointer">骑行</span>
+                        <div class="h-6 w-px bg-white/10"></div>
+                        <span class="text-white/30 hover:text-white transition-colors font-medium tracking-tighter text-xl cursor-pointer">露营</span>
+                        <span class="text-white/30 hover:text-white transition-colors font-medium tracking-tighter text-xl cursor-pointer">登山</span>
+                    </div>
+                </div>
+
+                <!-- Right Content: The White Glass Note -->
+                <div class="lg:col-span-5 flex lg:justify-end items-center reveal-target">
+                    <div class="w-full max-w-md bg-white p-8 lg:p-12 rounded-3xl relative overflow-hidden group rotate-1 hover:rotate-0 transition-transform duration-500 shadow-2xl">
+                        <!-- Decorative Icon Background -->
+                        <iconify-icon icon="solar:settings-linear" class="absolute -right-8 -top-8 text-black/5 text-[12rem] rotate-12 group-hover:rotate-45 transition-transform duration-700"></iconify-icon>
+
+                        <div class="relative z-10">
+                            <h3 class="text-3xl font-medium text-black tracking-tight leading-tight mb-6">
+                                精准的路线，<br>每一段旅途。
+                            </h3>
+                            <p class="text-black/50 text-xs font-normal leading-relaxed mb-10 font-mono">
+                                // 每一条路线都经过智能计算，每一次出行都有安全保障。
+                            </p>
+
+                            <div class="flex items-center justify-between border-t border-black/10 pt-6">
+                                <div class="flex flex-col">
+                                    <span class="text-xs uppercase tracking-widest text-black/40 font-mono scale-90 origin-left">状态</span>
+                                    <span class="text-xs font-medium text-black mt-1 tracking-tight">正常运行</span>
+                                </div>
+                                <button class="bg-black text-white w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform group/btn">
+                                    <iconify-icon icon="solar:arrow-right-up-linear" width="18" stroke-width="1.5" class="group-hover/btn:rotate-45 transition-transform"></iconify-icon>
+
+                            </button></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Watermark -->
+            <div class="relative w-full overflow-hidden pointer-events-none select-none pt-12">
+                <h1 class="text-[20vw] leading-none font-normal text-white/5 text-center -mb-8 lg:-mb-16 tracking-tighter">
+                    荒野
+                </h1>
+                <!-- Overlay Gradient to fade bottom -->
+                <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t from-[#080808] to-transparent"></div>
+            </div>
+
+            <!-- Copyright Line -->
+            <div class="absolute bottom-6 w-full flex justify-center z-30">
+                 <p class="text-xs text-white/30 font-mono uppercase tracking-widest hover:text-white/50 transition-colors cursor-default">© 2024 荒野智能路书. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Aurora GL Background Script -->
+    <script type="module">
+        import { Renderer, Program, Mesh, Color, Triangle } from 'https://cdn.jsdelivr.net/npm/ogl@1.0.0/+esm';
+
+        const VERT = `#version 300 es
+        in vec2 position;
+        void main() {
+            gl_Position = vec4(position, 0.0, 1.0);
+        }`;
+
+        const FRAG = `#version 300 es
+        precision highp float;
+
+        uniform float uTime;
+        uniform float uAmplitude;
+        uniform vec3 uColorStops[3];
+        uniform vec2 uResolution;
+        uniform float uBlend;
+
+        out vec4 fragColor;
+
+        vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
+
+        float snoise(vec2 v){
+            const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+            vec2 i  = floor(v + dot(v, C.yy));
+            vec2 x0 = v - i + dot(i, C.xx);
+            vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+            vec4 x12 = x0.xyxy + C.xxzz;
+            x12.xy -= i1;
+            i = mod(i, 289.0);
+            vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+            vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+            m = m * m;
+            m = m * m;
+            vec3 x = 2.0 * fract(p * C.www) - 1.0;
+            vec3 h = abs(x) - 0.5;
+            vec3 ox = floor(x + 0.5);
+            vec3 a0 = x - ox;
+            m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+            vec3 g;
+            g.x  = a0.x  * x0.x  + h.x  * x0.y;
+            g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+            return 130.0 * dot(m, g);
+        }
+
+        struct ColorStop { vec3 color; float position; };
+
+        #define COLOR_RAMP(colors, factor, finalColor) { \
+            int index = 0; \
+            for (int i = 0; i < 2; i++) { \
+                ColorStop currentColor = colors[i]; \
+                bool isInBetween = currentColor.position <= factor; \
+                index = int(mix(float(index), float(i), float(isInBetween))); \
+            } \
+            ColorStop currentColor = colors[index]; \
+            ColorStop nextColor = colors[index + 1]; \
+            float range = nextColor.position - currentColor.position; \
+            float lerpFactor = (factor - currentColor.position) / range; \
+            finalColor = mix(currentColor.color, nextColor.color, lerpFactor); \
+        }
+
+        void main() {
+            vec2 uv = gl_FragCoord.xy / uResolution;
+            ColorStop colors[3];
+            colors[0] = ColorStop(uColorStops[0], 0.0);
+            colors[1] = ColorStop(uColorStops[1], 0.5);
+            colors[2] = ColorStop(uColorStops[2], 1.0);
+            vec3 rampColor;
+            COLOR_RAMP(colors, uv.x, rampColor);
+            float height = snoise(vec2(uv.x * 2.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
+            height = exp(height);
+            height = (uv.y * 2.0 - height + 0.2);
+            float intensity = 0.6 * height;
+            float midPoint = 0.20;
+            float auroraAlpha = smoothstep(midPoint - uBlend * 0.5, midPoint + uBlend * 0.5, intensity);
+            vec3 auroraColor = intensity * rampColor;
+            fragColor = vec4(auroraColor * auroraAlpha, auroraAlpha);
+        }
+        `;
+
+        function initAurora() {
+            const ctn = document.getElementById('aurora-container');
+            if (!ctn) return;
+
+            const renderer = new Renderer({ alpha: true, premultipliedAlpha: true, antialias: true });
+            const gl = renderer.gl;
+            gl.clearColor(0, 0, 0, 0);
+            gl.enable(gl.BLEND);
+            gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+            let program;
+
+            function resize() {
+                const width = ctn.offsetWidth;
+                const height = ctn.offsetHeight;
+                renderer.setSize(width, height);
+                if (program) {
+                    program.uniforms.uResolution.value = [width, height];
+                }
+            }
+            window.addEventListener('resize', resize);
+
+            const geometry = new Triangle(gl);
+            if (geometry.attributes.uv) delete geometry.attributes.uv;
+
+            const hexColors = ['#5227FF', '#7cff67', '#5227FF'];
+            const colorStopsArray = hexColors.map(hex => {
+                const c = new Color(hex);
+                return [c.r, c.g, c.b];
+            });
+
+            program = new Program(gl, {
+                vertex: VERT,
+                fragment: FRAG,
+                uniforms: {
+                    uTime: { value: 0 },
+                    uAmplitude: { value: 1.2 },
+                    uColorStops: { value: colorStopsArray },
+                    uResolution: { value: [ctn.offsetWidth, ctn.offsetHeight] },
+                    uBlend: { value: 0.6 }
+                }
+            });
+
+            const mesh = new Mesh(gl, { geometry, program });
+            ctn.appendChild(gl.canvas);
+
+            let animateId;
+            const update = t => {
+                animateId = requestAnimationFrame(update);
+                program.uniforms.uTime.value = (t * 0.01) * 1.0 * 0.1;
+                renderer.render({ scene: mesh });
+            };
+            animateId = requestAnimationFrame(update);
+            resize();
+        }
+
+        // Initialize Pure WebGL Layer
+        initAurora();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <!-- UI Interaction Scripts & Animations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- 1. Hero Card Interactivity ---
+            const cardsWrapper = document.getElementById('cards-wrapper');
+            if(cardsWrapper) {
+                gsap.set(cardsWrapper, {
+                    rotationY: -15,
+                    rotationX: 10,
+                    rotationZ: -5,
+                    transformPerspective: 2000
+                });
+
+                document.addEventListener('mousemove', (e) => {
+                    const xNorm = (e.clientX / window.innerWidth) - 0.5;
+                    const yNorm = (e.clientY / window.innerHeight) - 0.5;
+
+                    gsap.to(cardsWrapper, {
+                        rotationY: -15 + (xNorm * 30),
+                        rotationX: 10 - (yNorm * 30),
+                        duration: 0.8,
+                        ease: "power2.out",
+                        overwrite: "auto"
+                    });
+                });
+            }
+
+            // --- 2. Custom Toggle logic ---
+            const tMain = document.getElementById('toggle-mainnet');
+            const tTest = document.getElementById('toggle-testnet');
+            if(tMain && tTest) {
+                const setToggle = (active, inactive) => {
+                    active.classList.add('bg-white', 'shadow-sm', 'text-zinc-900', 'border', 'border-zinc-200/50');
+                    active.classList.remove('text-zinc-400');
+                    inactive.classList.remove('bg-white', 'shadow-sm', 'text-zinc-900', 'border', 'border-zinc-200/50');
+                    inactive.classList.add('text-zinc-400');
+                };
+                tMain.addEventListener('click', () => setToggle(tMain, tTest));
+                tTest.addEventListener('click', () => setToggle(tTest, tMain));
+            }
+
+                        // 获取所有菜单选项
+                  const menuItems = document.querySelectorAll('.menu-item');
+
+              // 给每个菜单项添加点击事件
+              menuItems.forEach(item => {
+                item.addEventListener('click', () => {
+                  // 1. 先清空所有选中状态
+                  menuItems.forEach(el => {
+                    el.classList.remove('bg-white/10', 'text-white');
+                  });
+
+                  // 2. 给当前点击的项添加选中样式
+                  item.classList.add('bg-white/10', 'text-white');
+                });
+              });
+
+            // --- 3. 顶部导航切换逻辑 ---
+            const navFeatures = document.getElementById('nav-features');
+            const navCommunity = document.getElementById('nav-community');
+            const navRoutes = document.getElementById('nav-routes');
+            const contentFeatures = document.getElementById('content-features');
+            const contentCommunity = document.getElementById('content-community');
+            const contentRoutes = document.getElementById('content-routes');
+
+            if(navFeatures && navCommunity && navRoutes && contentFeatures && contentCommunity && contentRoutes) {
+                const setTab = (activeNav, activeContent, nav1, nav2, content1, content2) => {
+                    // 更新导航样式
+                    activeNav.classList.remove('text-white/50');
+                    activeNav.classList.add('text-white');
+                    nav1.classList.remove('text-white');
+                    nav1.classList.add('text-white/50');
+                    nav2.classList.remove('text-white');
+                    nav2.classList.add('text-white/50');
+                    // 更新内容显示
+                    activeContent.classList.remove('hidden');
+                    content1.classList.add('hidden');
+                    content2.classList.add('hidden');
+                    // 滚动到模块顶部
+                    document.getElementById('architecture').scrollIntoView({ behavior: 'smooth' });
+                };
+
+                navFeatures.addEventListener('click', () => setTab(navFeatures, contentFeatures, navCommunity, navRoutes, contentCommunity, contentRoutes));
+                navCommunity.addEventListener('click', () => setTab(navCommunity, contentCommunity, navFeatures, navRoutes, contentFeatures, contentRoutes));
+                navRoutes.addEventListener('click', () => setTab(navRoutes, contentRoutes, navFeatures, navCommunity, contentFeatures, contentCommunity));
+            }
+
+            // --- 4. 功能按钮交互 ---
+            // 通用提示按钮：查看详情、加入组队、下载路书等
+            document.querySelectorAll('.text-xs.text-blue-600, .text-xs.text-green-500').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    alert('该功能正在开发中，敬请期待~');
+                });
+            });
+
+            // 营销按钮点击提示，让用户看到交互反馈
+            // 登录账号
+            document.querySelector('a[href="#login"]')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('登录你的荒野路书账号，即可查看你的路线、组队和装备推荐~');
+            });
+            // 立即开始
+            document.querySelector('a[href="#start"]')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('立即注册账号，免费体验智能路线规划、装备推荐等功能，开启你的户外探索！');
+            });
+            // 查看文档
+            document.querySelector('a[href="#docs"]')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('产品文档正在整理中，后续会为你提供完整的使用指南~');
+            });
+            // 免费试用
+            document.querySelector('a[href="#trial"]')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('免费试用已开放，注册账号即可体验7天完整功能，快来试试吧！');
+            });
+            // 查看演示
+            document.querySelector('a[href="#demo"]')?.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('演示视频正在制作中，后续会为你展示完整的产品功能演示~');
+            });
+
+            // 邮箱电话点击交互
+            document.querySelectorAll('.font-mono.text-sm').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const text = e.target.textContent.trim();
+                    if(text.includes('@')) {
+                        window.location.href = 'mailto:' + text;
+                    } else if(text.includes('-')) {
+                        window.location.href = 'tel:' + text;
+                    }
+                });
+            });
+
+            // Footer分类标签点击交互
+            const footerHike = document.getElementById('footer-hike');
+            const footerRide = document.getElementById('footer-ride');
+            const footerCamp = document.getElementById('footer-camp');
+            const footerClimb = document.getElementById('footer-climb');
+
+            if(footerHike && footerRide && navRoutes) {
+                // 徒步：切换到路线库，激活徒步筛选
+                footerHike.addEventListener('click', () => {
+                    // 先切换到路线库tab
+                    navRoutes.click();
+                    // 然后点击徒步筛选按钮
+                    setTimeout(() => {
+                        const hikeFilter = document.querySelector('#content-routes button:nth-child(2)');
+                        if(hikeFilter) hikeFilter.click();
+                    }, 300);
+                });
+                // 骑行：切换到路线库，激活骑行筛选
+                footerRide.addEventListener('click', () => {
+                    navRoutes.click();
+                    setTimeout(() => {
+                        const rideFilter = document.querySelector('#content-routes button:nth-child(3)');
+                        if(rideFilter) rideFilter.click();
+                    }, 300);
+                });
+                // 露营、登山：切换到路线库
+                [footerCamp, footerClimb].forEach(el => {
+                    el.addEventListener('click', () => {
+                        navRoutes.click();
+                    });
+                });
+            }
+
+            // --- 5. 路线库筛选交互 ---
+            const routeFilters = document.querySelectorAll('#content-routes .flex.items-center.gap-4 button');
+            const routeCards = document.querySelectorAll('#content-routes .grid.grid-cols-1 > div');
+            if(routeFilters.length > 0 && routeCards.length > 0) {
+                const setFilter = (activeBtn, filterType) => {
+                    // 更新筛选按钮样式
+                    routeFilters.forEach(btn => {
+                        btn.classList.remove('bg-white', 'shadow-sm', 'text-zinc-900', 'border', 'border-zinc-200/50');
+                        btn.classList.add('text-zinc-400');
+                    });
+                    activeBtn.classList.add('bg-white', 'shadow-sm', 'text-zinc-900', 'border', 'border-zinc-200/50');
+                    activeBtn.classList.remove('text-zinc-400');
+                    // 筛选路线
+                    routeCards.forEach(card => {
+                        const tag = card.querySelector('.absolute.top-3.left-3').textContent.trim();
+                        if(filterType === '全部' || tag.includes(filterType)) {
+                            card.classList.remove('hidden');
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                };
+                // 全部筛选
+                routeFilters[0].addEventListener('click', () => setFilter(routeFilters[0], '全部'));
+                // 徒步筛选
+                routeFilters[1].addEventListener('click', () => setFilter(routeFilters[1], '徒步'));
+                // 骑行筛选
+                routeFilters[2].addEventListener('click', () => setFilter(routeFilters[2], '骑行'));
+            }
+
+            // --- 3. Scroll Reveal Animations ---
+            const sectionsToAnimate = document.querySelectorAll('main, section, footer');
+            sectionsToAnimate.forEach(section => {
+                const targets = section.querySelectorAll('.reveal-target');
+                if (targets.length > 0) {
+                    // Set initial pre-animation state
+                    gsap.set(targets, { opacity: 0, y: 30, filter: 'blur(8px)', autoAlpha: 0 });
+
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: "top 85%",
+                        onEnter: () => {
+                            gsap.to(targets, {
+                                autoAlpha: 1,
+                                opacity: 1,
+                                y: 0,
+                                filter: 'blur(0px)',
+                                duration: 1,
+                                stagger: 0.15,
+                                ease: "power3.out",
+                                onComplete: function() {
+                                    // Remove the inline filter so Tailwind utilities can work properly afterwards
+                                    gsap.set(targets, { clearProps: "filter" });
+                                }
+                            });
+                        },
+                        once: true // Animate only once per element
+                    });
+                }
+            });
+        });
+         if (!window.THREE) console.error("Three.js non chargé");
+let layers = [];
+const textures = [];
+let loaded = 0;
+let lastTime = 0;
+const DEPTH_LAYERS = 5;
+const IMAGES_PER_LAYER = 10;
+const MAX_WIDTH = 160;
+const MAX_HEIGHT = 160;
+let dragActive = !1;
+let lastX = 0;
+let dragVelocity = 0;
+let speedFactor = 1;
+const LAYER_CONFIG = [{
+    scale: 1.5,
+    speed: 80,
+    opacity: 1.0
+}, {
+    scale: 1.0,
+    speed: 40,
+    opacity: 0.85
+}, {
+    scale: 0.8,
+    speed: 30,
+    opacity: 0.7
+}, {
+    scale: 0.6,
+    speed: 20,
+    opacity: 0.55
+}, {
+    scale: 0.5,
+    speed: 15,
+    opacity: 0.4
+}];
+const IMAGE_PATHS = [
+
+
+'https://images.unsplash.com/photo-1551740994-7af69385a217?w=200',
+'https://images.unsplash.com/photo-1605548109944-9040d0972bf5?w=200',
+'https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=200',
+'https://images.unsplash.com/photo-1699361207152-20f9c61c8d30?w=200',
+'https://images.unsplash.com/photo-1705256529262-039654a3ba7f?w=200',
+'https://images.unsplash.com/photo-1628361521002-4c91ce36ef52?w=200',
+'https://images.unsplash.com/photo-1601224748193-d24f166b5c77?w=200'
+
+
+];
+let shuffledImages = [];
+let currentImageIndex = 0;
+console.log("&Toc on codepen - https://codepen.io/ol-ivier");
+
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+    }
+    return newArray
+}
+
+function getNextRandomImage() {
+    if (currentImageIndex >= shuffledImages.length) {
+        shuffledImages = shuffleArray(IMAGE_PATHS);
+        currentImageIndex = 0
+    }
+    const image = shuffledImages[currentImageIndex];
+    currentImageIndex++;
+    return image
+}
+const container = document.getElementById("container");
+const loadingEl = document.getElementById("loading");
+const uiEl = document.getElementById("ui");
+const scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer({
+    antialias: !0,
+    alpha: !0,
+    powerPreference: "high-performance"
+});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+renderer.setClearColor(0x000000, 0);
+container.appendChild(renderer.domElement);
+let camera;
+
+function rand(min, max) {
+    return Math.random() * (max - min) + min
+}
+
+function fallbackTexture(layer) {
+    const c = document.createElement("canvas");
+    c.width = MAX_WIDTH;
+    c.height = MAX_HEIGHT;
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = ["#4a6572", "#344955", "#232f34", "#1c2529", "#0f1518"][layer];
+    ctx.fillRect(0, 0, c.width, c.height);
+    return new THREE.CanvasTexture(c)
+}
+for (let l = 0; l < DEPTH_LAYERS; l++) {
+    layers[l] = []
+}
+
+function resize() {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    renderer.setSize(w, h);
+    if (!camera) {
+        camera = new THREE.OrthographicCamera(0, w, h, 0, -1000, 1000);
+        camera.position.z = 10
+    } else {
+        camera.right = w;
+        camera.top = h;
+        camera.updateProjectionMatrix()
+    }
+    for (const layer of layers) {
+        if (!layer) continue;
+        for (const s of layer) {
+            scene.remove(s);
+            if (s.material.map) s.material.map.dispose();
+            s.material.dispose();
+            s.geometry.dispose()
+        }
+    }
+    layers = [];
+    for (let l = 0; l < DEPTH_LAYERS; l++) layers[l] = [];
+    if (textures.length === DEPTH_LAYERS * IMAGES_PER_LAYER) fillViewport();
+}
+window.addEventListener("resize", resize);
+resize();
+const loader = new THREE.TextureLoader();
+loader.crossOrigin = "anonymous";
+const TOTAL = DEPTH_LAYERS * IMAGES_PER_LAYER;
+
+function loadAll() {
+    shuffledImages = shuffleArray(IMAGE_PATHS);
+    currentImageIndex = 0;
+    for (let l = 0; l < DEPTH_LAYERS; l++) {
+        for (let i = 0; i < IMAGES_PER_LAYER; i++) {
+            const path = getNextRandomImage();
+            loader.load(path, tex => onLoaded(tex), undefined, () => onLoaded(fallbackTexture(l)))
+        }
+    }
+}
+
+function onLoaded(tex) {
+    textures.push(tex);
+    loaded++;
+    loadingEl.textContent = `Chargement ${Math.round((loaded/TOTAL)*100)}%`;
+    if (loaded === TOTAL) initSprites();
+}
+
+function initSprites() {
+    fillViewport();
+    loadingEl.style.display = "none";
+    uiEl.style.display = "block";
+    lastTime = performance.now();
+    animate()
+}
+
+function addSprite(layerIndex, startX) {
+    const cfg = LAYER_CONFIG[layerIndex];
+    const texIndex = Math.floor(Math.random() * textures.length);
+    const texture = textures[texIndex] || fallbackTexture(layerIndex);
+    const mat = new THREE.SpriteMaterial({
+        map: texture,
+        transparent: !0,
+        opacity: cfg.opacity
+    });
+    const sprite = new THREE.Sprite(mat);
+    const image = texture.image;
+    let width = MAX_WIDTH;
+    let height = MAX_HEIGHT;
+    if (image && image.width && image.height) {
+        const ratio = image.width / image.height;
+        if (ratio > 1) {
+            width = MAX_WIDTH;
+            height = MAX_WIDTH / ratio
+        } else {
+            height = MAX_HEIGHT;
+            width = MAX_HEIGHT * ratio
+        }
+    }
+    const sizeVar = rand(0.85, 1.15);
+    const w = width * cfg.scale * sizeVar;
+    const h = height * cfg.scale * sizeVar;
+    const spacing = w * rand(0.5, 0.9);
+    sprite.scale.set(w, h, 1);
+    sprite.position.set(startX + w / 2 + spacing, rand(h / 2, container.clientHeight - h / 2), -layerIndex * 50);
+    const speedVariation = rand(0.45, 1.15);
+    sprite.userData = {
+        speed: cfg.speed * speedVariation,
+        width: w,
+        height: h,
+        seed: rand(0, 1000),
+        baseY: sprite.position.y,
+        opacity: cfg.opacity
+    };
+    layers[layerIndex].push(sprite);
+    scene.add(sprite);
+    return sprite
+}
+
+function cleanupSprites() {
+    const w = container.clientWidth;
+    const bufferZone = w * 0.5;
+    for (let l = 0; l < DEPTH_LAYERS; l++) {
+        if (!layers[l] || layers[l].length === 0) continue;
+        const sprites = layers[l];
+        const maxSprites = IMAGES_PER_LAYER + 3;
+        if (sprites.length > maxSprites) {
+            for (let i = sprites.length - 1; i >= 0; i--) {
+                const s = sprites[i];
+                const ud = s.userData;
+                let shouldRemove = !1;
+                if (speedFactor > 0) {
+                    shouldRemove = (s.position.x - ud.width / 2) > (w + bufferZone)
+                } else if (speedFactor < 0) {
+                    shouldRemove = (s.position.x + ud.width / 2) < (-bufferZone)
+                }
+                if (shouldRemove) {
+                    scene.remove(s);
+                    if (s.material.map) s.material.map.dispose();
+                    s.material.dispose();
+                    sprites.splice(i, 1);
+                    if (sprites.length <= maxSprites) break
+                }
+            }
+        }
+    }
+}
+
+function fillViewport() {
+    const w = container.clientWidth;
+    for (let l = 0; l < DEPTH_LAYERS; l++) {
+        let sprites = layers[l];
+        if (!sprites) continue;
+        let rightMost = sprites.length > 0 ? Math.max(...sprites.map(s => s.position.x + s.userData.width / 2)) : -container.clientWidth * 1.2;
+        while (rightMost < w) {
+            addSprite(l, rightMost);
+            sprites = layers[l];
+            rightMost = Math.max(...sprites.map(s => s.position.x + s.userData.width / 2))
+        }
+    }
+}
+
+function animate() {
+    const now = performance.now();
+    const dt = Math.min(40, now - lastTime) / 1000;
+    lastTime = now;
+    const w = container.clientWidth;
+    dragVelocity *= 0.92;
+    speedFactor = dragVelocity !== 0 ? Math.sign(dragVelocity) : speedFactor;
+    if (Math.random() < 0.01) {
+        cleanupSprites()
+    }
+    for (const sprites of layers) {
+        if (!sprites || !sprites.length) continue;
+        for (const s of sprites) {
+            const ud = s.userData;
+            s.position.x += ud.speed * speedFactor * dt;
+            if (speedFactor > 0 && s.position.x - ud.width / 2 > w) {
+                s.position.x = -ud.width / 2 - rand(0, ud.width)
+            } else if (speedFactor < 0 && s.position.x + ud.width / 2 < 0) {
+                s.position.x = w + ud.width / 2 + rand(0, ud.width)
+            }
+            const pulse = 1 + Math.sin(now * 0.001 + ud.seed) * 0.015;
+            s.scale.x = ud.width * pulse;
+            s.scale.y = ud.height * pulse;
+            s.position.y = ud.baseY + Math.sin(now * 0.001 + ud.seed) * 5;
+            s.material.opacity = ud.opacity
+        }
+    }
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate)
+}
+loadAll();
+
+function getX(e) {
+    return e.touches ? e.touches[0].clientX : e.clientX
+}
+container.addEventListener("mousedown", e => {
+    dragActive = !0;
+    lastX = getX(e)
+});
+container.addEventListener("mousemove", e => {
+    if (!dragActive) return;
+    const x = getX(e);
+    const dx = x - lastX;
+    lastX = x;
+    dragVelocity = dx * 0.02
+});
+window.addEventListener("mouseup", () => {
+    dragActive = !1
+});
+container.addEventListener("touchstart", e => {
+    dragActive = !0;
+    lastX = getX(e)
+}, {
+    passive: !0
+});
+container.addEventListener("touchmove", e => {
+    if (!dragActive) return;
+    const x = getX(e);
+    const dx = x - lastX;
+    lastX = x;
+    dragVelocity = dx * 0.02
+}, {
+    passive: !0
+});
+window.addEventListener("touchend", () => {
+    dragActive = !1
+});
+container.addEventListener("wheel", e => {
+    e.preventDefault();
+    const wheelDelta = Math.sign(e.deltaY);
+    const direction = wheelDelta > 0 ? 1 : -1;
+    const acceleration = 0.8;
+    speedFactor = direction * (Math.abs(speedFactor) + acceleration);
+    const maxSpeed = 5;
+    const sign = Math.sign(speedFactor);
+    const absSpeed = Math.min(maxSpeed, Math.abs(speedFactor));
+    speedFactor = sign * absSpeed;
+    dragVelocity = 0;
+    cleanupSprites()
+}, {
+    passive: !1
+});
+container.addEventListener("wheel", e => e.preventDefault(), {
+    passive: !1
+})
+
+let angle = 0;
+const spinner = document.querySelector("#spinner");
+
+// 自动旋转（核心代码）
+function autoRotate() {
+  angle += 0.3; // 数值越大转得越快
+  spinner.style.transform = `rotateY(${angle}deg)`;
+  requestAnimationFrame(autoRotate);
+}
+autoRotate(); // 启动
+
+// 你原来的点击旋转功能 完全保留
+function galleryspin(sign) {
+    if (!sign) {
+        angle += 45;
+    } else {
+        angle -= 45;
+    }
+    spinner.style.transform = `rotateY(${angle}deg)`;
+};
+    </script>
+
+</body></html>
